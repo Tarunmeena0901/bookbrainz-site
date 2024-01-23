@@ -180,7 +180,7 @@ function formatEditionGroupChange(change) {
 function diffRevisionsWithParents(orm, entityRevisions, entityType) {
 	// entityRevisions - collection of *entityType*_revisions matching id
 	const promises = entityRevisions.map(
-		async (revision) => {
+		async (revision) => { //yeh sab hona chaiyye humare diff krne ke baad
 			const dataId = revision.get('dataId');
 			const revisionEntity = revision.related('entity');
 			const entityBBID = revisionEntity.get('bbid');
@@ -283,6 +283,7 @@ router.get('/:id', async (req, res, next) => {
 
 		const authorDiffs = await _createRevision(AuthorRevision, 'Author');
 		const editionDiffs = await _createRevision(EditionRevision, 'Edition');
+		console.log("editionDiffs  :"+ JSON.stringify(editionDiffs, null, 2));
 		const editionGroupDiffs = await _createRevision(EditionGroupRevision, 'EditionGroup');
 		const publisherDiffs = await _createRevision(PublisherRevision, 'Publisher');
 		const seriesDiffs = await _createRevision(SeriesRevision, 'Series');
@@ -319,13 +320,13 @@ router.get('/:id', async (req, res, next) => {
 				formatWorkChange
 			)
 		);
-
+		console.log("concated diff  :"+ diffs);
 		const props = generateProps(req, res, {
 			diffs,
 			revision: revision.toJSON(),
 			title: 'RevisionPage'
 		});
-
+        console.log("revisionPage props   :"+ JSON.stringify(props, null, 2));
 		const markup = ReactDOMServer.renderToString(
 			<Layout {...propHelpers.extractLayoutProps(props)}>
 				<RevisionPage

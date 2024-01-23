@@ -32,7 +32,7 @@ import type {
 	FormPublisherT as Publisher,
 	FormReleaseEventT as ReleaseEvent,
 	Transaction
-} from 'bookbrainz-data/lib/func/types';
+} from 'tarun0901-test/lib/func/types';
 import {escapeProps, generateProps} from '../../helpers/props';
 
 import {AuthorCreditRow} from '../../../client/entity-editor/author-credit-editor/actions';
@@ -41,7 +41,7 @@ import DeletionForm from '../../../client/components/forms/deletion';
 import EditionGroupPage from '../../../client/components/pages/entities/edition-group';
 import EditionPage from '../../../client/components/pages/entities/edition';
 import EntityRevisions from '../../../client/components/pages/entity-revisions';
-import type {EntityTypeString} from 'bookbrainz-data/lib/types/entity';
+import type {EntityTypeString} from 'tarun0901-test/lib/types/entity';
 import Layout from '../../../client/containers/layout';
 import PreviewPage from '../../../client/components/forms/preview';
 import PublisherPage from '../../../client/components/pages/entities/publisher';

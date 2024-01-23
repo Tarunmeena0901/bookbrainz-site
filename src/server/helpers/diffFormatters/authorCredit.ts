@@ -34,8 +34,8 @@ function authorCreditNameForDisplay(authorCreditName: AuthorCreditNameT) {
 	return [`${authorCreditName.name}${authorCreditName.joinPhrase}`];
 }
 
-function authorCreditNamesForDisplay(rhs: {names: AuthorCreditNameT[]}) {
-	return rhs.names.sort((a, b) => a.position - b.position)
+function authorCreditNamesForDisplay(value: {names: AuthorCreditNameT[]}) {
+	return value.names.sort((a, b) => a.position - b.position)
 		.map(authorCreditNameForDisplay);
 }
 
@@ -45,7 +45,7 @@ function formatNewAuthorCredit(change) {
 
 function formatAuthorCreditAddOrDelete(change) {
 	return set.formatItemAddOrDelete(
-		change, `Author Credit ${change.item?.rhs?.position + 1}`, authorCreditNameForDisplay
+		change, `Author Credit ${change.item?.value?.position + 1}`, authorCreditNameForDisplay
 	);
 }
 

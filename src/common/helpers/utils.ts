@@ -2,7 +2,7 @@ import {EntityType, Relationship, RelationshipForDisplay} from '../../client/ent
 
 import {isString, kebabCase, toString, upperFirst} from 'lodash';
 import {IdentifierType} from '../../client/unified-form/interface/type';
-import type {LazyLoadedEntityT} from 'bookbrainz-data/lib/types/entity';
+import type {LazyLoadedEntityT} from 'tarun0901-test/lib/types/entity';
 
 /**
  * Regular expression for valid BookBrainz UUIDs (bbid)
@@ -23,7 +23,7 @@ export function isValidBBID(bbid: string): boolean {
 }
 
 /**
- * Returns all entity models defined in bookbrainz-data-js
+ * Returns all entity models defined in tarun0901-test-js
  *
  * @param {object} orm - the BookBrainz ORM, initialized during app setup
  * @returns {object} - Object mapping model name to the entity model

@@ -16,7 +16,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-import type {EntityTypeString, LazyLoadedEntityT} from 'bookbrainz-data/lib/types/entity';
+import type {EntityTypeString, LazyLoadedEntityT} from 'tarun0901-test/lib/types/entity';
 
 
 export type WikipediaArticle = {

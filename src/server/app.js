@@ -26,7 +26,7 @@ import * as serverErrorHelper from './helpers/error';
 
 import {repositoryUrl, siteRevision, userAgent} from './info';
 
-import BookBrainzData from 'bookbrainz-data';
+import BookBrainzData from 'tarun0901-test';
 import Debug from 'debug';
 import appCleanup from '../common/helpers/appCleanup';
 import compression from 'compression';

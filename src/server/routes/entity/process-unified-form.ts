@@ -11,7 +11,7 @@ import {seriesToFormState, transformNewForm as seriesTransform} from './series';
 import {workToFormState, transformNewForm as workTransform} from './work';
 import type {
 	EntityTypeString
-} from 'bookbrainz-data/lib/types/entity';
+} from 'tarun0901-test/lib/types/entity';
 import _ from 'lodash';
 import {_bulkIndexEntities} from '../../../common/helpers/search';
 import log from 'log';

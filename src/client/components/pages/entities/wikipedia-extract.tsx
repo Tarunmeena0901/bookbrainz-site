@@ -20,7 +20,7 @@ import {Col, Row} from 'react-bootstrap';
 import React, {useEffect, useState} from 'react';
 import {WikipediaArticleExtract, buildWikipediaUrl, getWikidataId} from '../../../../common/helpers/wikimedia';
 import DOMPurify from 'isomorphic-dompurify';
-import type {LazyLoadedEntityT} from 'bookbrainz-data/lib/types/entity';
+import type {LazyLoadedEntityT} from 'tarun0901-test/lib/types/entity';
 import {getAliasLanguageCodes} from '../../../../common/helpers/utils';
 import {uniq} from 'lodash';
 

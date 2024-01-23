@@ -19,41 +19,41 @@
 import _ from 'lodash';
 
 
-export function formatRow(kind, key, lhs, rhs) {
-	if (_.isNil(lhs) && _.isNil(rhs)) {
+export function formatRow(type, key, oldValue, value) {
+	if (_.isNil(oldValue) && _.isNil(value)) {
 		return [];
 	}
 
-	if (kind === 'N' || _.isNil(lhs)) {
+	if (type === 'CREATE' || _.isNil(oldValue)) {
 		return {
 			key,
-			kind: 'N',
-			rhs
+			type: 'CREATE',
+			value
 		};
 	}
 
-	if (kind === 'D' || _.isNil(rhs)) {
+	if (type === 'DELETE' || _.isNil(value)) {
 		return {
 			key,
-			kind: 'D',
-			lhs
+			type: 'DELETE',
+			oldValue
 		};
 	}
 
 	return {
 		key,
-		kind,
-		lhs,
-		rhs
+		type,
+		oldValue,
+		value
 	};
 }
 
 export function formatChange(change, label, transformer) {
 	return formatRow(
-		change.kind,
+		change.type,
 		label,
-		transformer(change.lhs),
-		transformer(change.rhs)
+		transformer(change.oldValue),
+		transformer(change.value)
 	);
 }
 

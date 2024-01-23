@@ -50,38 +50,39 @@ class RevisionPage extends React.Component {
 
 	static formatChange(change) {
 		const isChangeADate = change.key.toLowerCase().match(/\bdate\b/);
-		if (change.kind === 'N') {
+		console.log("revision change  :" + JSON.stringify(change, null, 2));
+		if (change.type === 'CREATED') {
 			return (
 				<tr className="table-success" key={change.key}>
 					<th scope="row">{change.key}</th>
 					<td> — </td>
 					<td>
-						{RevisionPage.formatValueList(change.rhs, isChangeADate)}
+						{RevisionPage.formatValueList(change.value, isChangeADate)}
 					</td>
 				</tr>
 			);
 		}
 
-		if (change.kind === 'E') {
+		if (change.type === 'CHANGE') {
 			return (
 				<tr className="table-warning" key={change.key}>
 					<th scope="row">{change.key}</th>
 					<td>
-						{RevisionPage.formatValueList(change.lhs, isChangeADate)}
+						{RevisionPage.formatValueList(change.oldValue, isChangeADate)}
 					</td>
 					<td>
-						{RevisionPage.formatValueList(change.rhs, isChangeADate)}
+						{RevisionPage.formatValueList(change.value, isChangeADate)}
 					</td>
 				</tr>
 			);
 		}
 
-		if (change.kind === 'D') {
+		if (change.type === 'DELETE') {
 			return (
 				<tr className="table-danger" key={change.key}>
 					<th scope="row">{change.key}</th>
 					<td>
-						{RevisionPage.formatValueList(change.lhs, isChangeADate)}
+						{RevisionPage.formatValueList(change.oldValue, isChangeADate)}
 					</td>
 					<td> — </td>
 				</tr>
@@ -184,7 +185,7 @@ class RevisionPage extends React.Component {
 		const {revision, diffs, user} = this.props;
 		let regularDiffs = diffs;
 		let mergeDiffDivs;
-
+        
 		if (revision.isMerge) {
 			/**
 			 * Separate entities between merged and not merged
@@ -192,6 +193,8 @@ class RevisionPage extends React.Component {
 			const mergeDiffs = _.filter(diffs, diff => diff.entityRevision.isMerge);
 			regularDiffs = _.filter(diffs, diff => !diff.entityRevision.isMerge);
 
+			console.log("regularDiffs  :"+ JSON.stringify(regularDiffs, null, 2));
+            console.log("mergeDiff  :"+ mergeDiffs);
 			/**
 			 * We sort the merged entities diffs by number of changes.
 			 * Display the entity we merge into at the bottom ('merges entity X and Y into Z')
@@ -208,8 +211,10 @@ class RevisionPage extends React.Component {
 				})
 				.map(RevisionPage.getEntityDiff);
 		}
+		console.log("mergeDiffDivs  :"+ mergeDiffDivs);
 
 		const diffDivs = regularDiffs.map(RevisionPage.getEntityDiff);
+		console.log("diffDivs  :"+ JSON.stringify(diffDivs, null, 2));
 
 		const editorTitle =
 			RevisionPage.formatTitle(revision.author);

@@ -50,7 +50,7 @@ export function format(
 	modifyFormatter
 ) {
 	const setAdded =
-		change.kind === 'N' && _.isEqual(change.path, [setProp]);
+		change.type === 'N' && _.isEqual(change.path, [setProp]);
 	if (setAdded) {
 		return newSetFormatter(change);
 	}
@@ -59,12 +59,13 @@ export function format(
 		change.path.length > 1 && change.path[0] === setProp &&
 			change.path[1] === itemProp;
 	if (itemAddDeleteModify) {
-		if (change.kind === 'A') {
+		/////////////yaha sea
+		if (change.type === '') {
 			// Item added to or deleted from set
 			return addDeleteFormatter(change);
 		}
 
-		if (change.kind === 'E') {
+		if (change.type === 'CHANGE') {
 			// Item in set changed
 			return modifyFormatter(change);
 		}

@@ -16,7 +16,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 import {ENTITY_TYPES} from '../../../helpers/entity';
-import type {EntityTypeString} from 'bookbrainz-data/lib/types/entity';
+import type {EntityTypeString} from 'tarun0901-test/lib/types/entity';
 import React from 'react';
 
 

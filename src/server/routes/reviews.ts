@@ -19,7 +19,7 @@
 
 import * as auth from '../helpers/auth';
 import * as cbHelper from '../helpers/critiquebrainz';
-import {ExternalServiceTokenT} from 'bookbrainz-data/lib/func/types';
+import {ExternalServiceTokenT} from 'tarun0901-test/lib/func/types';
 import {PrivilegeType} from '../../common/helpers/privileges-utils';
 import express from 'express';
 

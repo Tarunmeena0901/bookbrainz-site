@@ -44,18 +44,18 @@ function formatChangedDisambiguation(change) {
 }
 
 function formatNewAliasSet(change) {
-	const {rhs} = change;
+	const {value} = change;
 	const changes = [];
-	if (rhs.defaultAlias && rhs.defaultAliasId) {
+	if (value.defaultAlias && value.defaultAliasId) {
 		changes.push(
-			base.formatRow('N', 'Default Alias', null, [rhs.defaultAlias.name])
+			base.formatRow('CREATE', 'Default Alias', null, [value.defaultAlias.name])
 		);
 	}
 
-	if (rhs.aliases && rhs.aliases.length) {
+	if (value.aliases && value.aliases.length) {
 		changes.push(
 			base.formatRow(
-				'N', 'Aliases', null, rhs.aliases.map((alias) => alias.name)
+				'CREATE', 'Aliases', null, value.aliases.map((alias) => alias.name)
 			)
 		);
 	}
@@ -143,7 +143,7 @@ function formatRelationshipAttributeModified(change) {
 
 function formatAlias(change) {
 	const aliasSetAdded =
-		change.kind === 'N' && _.isEqual(change.path, ['aliasSet']);
+		change.type === 'CREATE' && _.isEqual(change.path, ['aliasSet']);
 	if (aliasSetAdded) {
 		return formatNewAliasSet(change);
 	}
@@ -152,12 +152,12 @@ function formatAlias(change) {
 		change.path.length > 1 && change.path[0] === 'aliasSet' &&
 		change.path[1] === 'aliases';
 	if (aliasSetChanged) {
-		if (change.kind === 'A') {
+		if (change.type === 'CREATE') {
 			// Alias added to or deleted from set
 			return formatAliasAddOrDelete(change);
 		}
 
-		if (change.kind === 'E') {
+		if (change.type === 'CHANGE') {
 			// Entry in alias set changed
 			return formatAliasModified(change);
 		}
@@ -173,10 +173,10 @@ function formatAlias(change) {
 }
 
 function formatNewIdentifierSet(change) {
-	const {rhs} = change;
-	if (rhs.identifiers && rhs.identifiers.length > 0) {
+	const {value} = change;
+	if (value.identifiers && value.identifiers.length > 0) {
 		return [base.formatRow(
-			'N', 'Identifiers', null, rhs.identifiers.map(
+			'CREATE', 'Identifiers', null, value.identifiers.map(
 				(identifier) => `${identifier.type && identifier.type.label}: ${identifier.value}`
 			)
 		)];
@@ -223,7 +223,7 @@ function formatIdentifierModified(change) {
 
 function formatIdentifier(change) {
 	const identifierSetAdded =
-		change.kind === 'N' && _.isEqual(change.path, ['identifierSet']);
+		change.type === 'CREATE' && _.isEqual(change.path, ['identifierSet']);
 	if (identifierSetAdded) {
 		return formatNewIdentifierSet(change);
 	}
@@ -232,12 +232,12 @@ function formatIdentifier(change) {
 		change.path.length > 1 && change.path[0] === 'identifierSet' &&
 		change.path[1] === 'identifiers';
 	if (identifierSetChanged) {
-		if (change.kind === 'A') {
+		if (change.type === 'CREATE') {
 			// Identifier added to or deleted from set
 			return formatIdentifierAddOrDelete(change);
 		}
 
-		if (change.kind === 'E') {
+		if (change.type === 'CHANGE') {
 			// Entry in identifier set changed
 			return formatIdentifierModified(change);
 		}
@@ -258,27 +258,27 @@ function formatRelationshipAttributeAddOrDelete(relationshipAttributes) {
 
 function formatRelationshipAdd(entity, change) {
 	const changes = [];
-	const {rhs} = change.item;
+	const {value} = change.item;
 
-	if (!rhs) {
+	if (!value) {
 		return changes;
 	}
-	const key = rhs.type && rhs.type.label ? `Relationship : ${rhs.type.label}` : 'Relationship';
+	const key = value.type && value.type.label ? `Relationship : ${value.type.label}` : 'Relationship';
 	let attributes = [];
-	if (rhs.attributeSetId) {
-		attributes = formatRelationshipAttributeAddOrDelete(rhs.attributeSet?.relationshipAttributes);
+	if (value.attributeSetId) {
+		attributes = formatRelationshipAttributeAddOrDelete(value.attributeSet?.relationshipAttributes);
 	}
-	if (rhs.sourceBbid === entity.get('bbid')) {
+	if (value.sourceBbid === entity.get('bbid')) {
 		changes.push(
 			base.formatRow(
-				'N', key, null, [rhs.targetBbid, ...attributes]
+				'CREATE', key, null, [value.targetBbid, ...attributes]
 			)
 		);
 	}
 	else {
 		changes.push(
 			base.formatRow(
-				'N', key, null, [rhs.sourceBbid, ...attributes]
+				'CREATE', key, null, [value.sourceBbid, ...attributes]
 			)
 		);
 	}
@@ -288,11 +288,11 @@ function formatRelationshipAdd(entity, change) {
 function formatAddOrDeleteRelationshipSet(entity, change) {
 	const changes = [];
 	let allRelationships;
-	if (change.kind === 'N') {
-		allRelationships = change.rhs.relationships;
+	if (change.type === 'CREATE') {
+		allRelationships = change.value.relationships;
 	}
-	if (change.kind === 'D') {
-		allRelationships = change.lhs.relationships;
+	if (change.type === 'DELETE') {
+		allRelationships = change.oldValue.relationships;
 	}
 	if (!allRelationships) {
 		return changes;
@@ -307,14 +307,14 @@ function formatAddOrDeleteRelationshipSet(entity, change) {
 		if (relationship.sourceBbid === entity.get('bbid')) {
 			changes.push(
 				base.formatRow(
-					change.kind, key, [relationship.targetBbid, ...attributes], [relationship.targetBbid, ...attributes]
+					change.type, key, [relationship.targetBbid, ...attributes], [relationship.targetBbid, ...attributes]
 				)
 			);
 		}
 		else {
 			changes.push(
 				base.formatRow(
-					change.kind, key, [relationship.sourceBbid, ...attributes], [relationship.sourceBbid, ...attributes]
+					change.type, key, [relationship.sourceBbid, ...attributes], [relationship.sourceBbid, ...attributes]
 				)
 			);
 		}
@@ -324,48 +324,48 @@ function formatAddOrDeleteRelationshipSet(entity, change) {
 
 function formatRelationshipRemove(entity, change) {
 	const changes = [];
-	const {lhs} = change.item;
+	const {oldValue} = change.item;
 
-	if (!lhs) {
+	if (!oldValue) {
 		return changes;
 	}
-	const key = lhs.type && lhs.type.label ? `Relationship : ${lhs.type.label}` : 'Relationship';
+	const key = oldValue.type && oldValue.type.label ? `Relationship : ${oldValue.type.label}` : 'Relationship';
 	let attributes = [];
-	if (lhs.attributeSetId) {
-		attributes = formatRelationshipAttributeAddOrDelete(lhs.attributeSet?.relationshipAttributes);
+	if (oldValue.attributeSetId) {
+		attributes = formatRelationshipAttributeAddOrDelete(oldValue.attributeSet?.relationshipAttributes);
 	}
-	if (lhs.sourceBbid === entity.get('bbid')) {
+	if (oldValue.sourceBbid === entity.get('bbid')) {
 		changes.push(
 			base.formatRow(
-				'D', key, [lhs.targetBbid, ...attributes], null
+				'DELETE', key, [oldValue.targetBbid, ...attributes], null
 			)
 		);
 	}
 	else {
 		changes.push(
 			base.formatRow(
-				'D', key, [lhs.sourceBbid, ...attributes], null
+				'DELETE', key, [oldValue.sourceBbid, ...attributes], null
 			)
 		);
 	}
 	return changes;
 }
 function formatRelationship(entity, change) {
-	if (change.kind === 'N') {
+	if (change.type === 'CREATE') {
 		return formatAddOrDeleteRelationshipSet(entity, change);
 	}
-	if (change.kind === 'A') {
-		if (change.item.kind === 'N') {
+	if (change.type === 'CREATE') {
+		if (change.item.type === 'CREATE') {
 			return formatRelationshipAdd(entity, change);
 		}
-		if (change.item.kind === 'D') {
+		if (change.item.type === 'DELETE') {
 			return formatRelationshipRemove(entity, change);
 		}
 	}
-	if (change.kind === 'E') {
+	if (change.type === 'CHANGE') {
 		return formatRelationshipAttributeModified(change);
 	}
-	if (change.kind === 'D') {
+	if (change.type === 'DELETE') {
 		return formatAddOrDeleteRelationshipSet(entity, change);
 	}
 	return null;

@@ -21,8 +21,8 @@ import * as set from './set';
 
 
 function formatNewLanguageSet(change) {
-	function transformer(rhs) {
-		return rhs.languages.map((language) => language.name);
+	function transformer(value) {
+		return value.languages.map((language) => language.name);
 	}
 
 	return set.formatNewSet(
