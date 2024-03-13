@@ -19,7 +19,7 @@
  */
 
 import * as propHelpers from '../../client/helpers/props';
-import {escapeProps, generateProps} from '../helpers/props';
+import { escapeProps, generateProps } from '../helpers/props';
 import AboutPage from '../../client/components/pages/about';
 import ContributePage from '../../client/components/pages/contribute';
 import DevelopPage from '../../client/components/pages/develop';
@@ -32,15 +32,16 @@ import PrivacyPage from '../../client/components/pages/privacy';
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 import express from 'express';
-import {getOrderedRevisions} from '../helpers/revisions';
+import { getOrderedRevisions } from '../helpers/revisions';
 import target from '../templates/target';
-
+import { I18nextProvider } from 'react-i18next';
+import i18next from 'i18next';
 
 const router = express.Router();
 
 /* GET home page. */
 router.get('/', async (req, res, next) => {
-	const {orm} = req.app.locals;
+	const { orm } = req.app.locals;
 	const numRevisionsOnHomepage = 9;
 
 	function render(recent) {
@@ -58,9 +59,13 @@ router.get('/', async (req, res, next) => {
 		 * props
 		 */
 		const markup = ReactDOMServer.renderToString(
+
 			<Layout	{...propHelpers.extractLayoutProps(props)}>
-				<Index {...propHelpers.extractChildProps(props)}/>
+				<I18nextProvider i18n={req.i18n}>
+					<Index {...propHelpers.extractChildProps(props)} />
+				</I18nextProvider>
 			</Layout>
+
 		);
 
 		res.send(target({
@@ -88,7 +93,7 @@ function _createStaticRoute(route, title, PageComponent) {
 
 		const markup = ReactDOMServer.renderToString(
 			<Layout {...propHelpers.extractLayoutProps(props)}>
-				<PageComponent/>
+				<PageComponent />
 			</Layout>
 		);
 
