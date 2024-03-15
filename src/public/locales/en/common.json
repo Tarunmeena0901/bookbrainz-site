@@ -1,0 +1,18 @@
+{
+    "home": {
+        "nav_revisions": "Revisiones",
+        "nav_collections": "Collections",
+        "nav_statistics": "Statistics",
+        "nav_docs": "Docs",
+        "nav_add": "Add",
+        "home_search": "Search for ...",
+        "home_button_about": "About",
+        "home_button_contribute": "Contribute",
+        "home_button_develop": "Develop",
+        "home_contact": "Contact Us",
+        "home_heading": "The Open Book Database",
+        "home_about": "BookBrainz is a project to create an online database of information about every single book, magazine, journal and other publication ever written. We make all the data that we collect available to the whole world to consume and use as they see fit. Anyone can contribute to BookBrainz, whether through editing our information, helping out with development, or just spreading the word about our project.",
+        "home_recent_table": "Recent Activity",
+        "home_button_allrevision": "See all revisions"
+    }
+}

@@ -1,0 +1,16 @@
+{
+    "nav_revisions": "Revisiones",
+    "nav_collections":"Colecciones",
+    "nav_statistics": "Estadísticas",
+    "nav_docs":"Documentos",
+    "nav_add":"Agregar",
+    "home_search":"Buscar",
+    "home_button_about":"Acerca de",
+    "home_button_contribute":"Contribuir",
+    "home_button_develop":"Desarrollar",
+    "home_contact":"Contacta con nosotros",
+    "home_heading":"La base de datos de libros abiertos",
+    "home_about": "BookBrainz es un proyecto para crear una base de datos en línea de información sobre cada libro, revista, diario y otra publicación jamás escrita. Ponemos todos los datos que recopilamos a disposición de todo el mundo para que los consuman y utilicen como mejor les parezca. Cualquiera puede contribuir a BookBrainz, ya sea editando nuestra información, ayudando con el desarrollo o simplemente haciendo correr la voz sobre nuestro proyecto.",
+    "home_recent_table": "Actividad reciente",
+    "home_button_allrevision": "ver todas las revisiones"
+}
