@@ -58,17 +58,26 @@ router.get('/', async (req, res, next) => {
 		 * file object spread injects the app.locals variables into React as
 		 * props
 		 */
+
 		const markup = ReactDOMServer.renderToString(
-
-			<Layout	{...propHelpers.extractLayoutProps(props)}>
-				<I18nextProvider i18n={req.i18n}>
+			<I18nextProvider i18n={req.i18n}>
+				<Layout	{...propHelpers.extractLayoutProps(props)}>
 					<Index {...propHelpers.extractChildProps(props)} />
-				</I18nextProvider>
-			</Layout>
-
+				</Layout>
+			</I18nextProvider>
 		);
+		const initialI18nStore = {};
+		req.i18n.languages.forEach(l => {
+		  initialI18nStore[l] = req.i18n.services.resourceStore.data[l];
+		});
+		const initialLanguage = req.i18n.language;
 
+		console.log("33 STORE : ", initialI18nStore);
+		console.log("33 LANG : ", initialLanguage);
+		
 		res.send(target({
+			initialI18nStore,
+			initialLanguage,
 			markup,
 			page: 'Index',
 			props: escapeProps(props),

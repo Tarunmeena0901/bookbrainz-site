@@ -39,6 +39,8 @@ const favicon = `
 		content='#754e37'/>
 		`;
 export default ({
+	initialI18nStore,
+	initialLanguage,
 	title,
 	markup,
 	page,
@@ -59,6 +61,10 @@ export default ({
 			<meta name='viewport'
 				content='width=device-width, initial-scale=1, shrink-to-fit=no'>
 			${favicon}
+			<script>
+				window.initialI18nStore = JSON.parse('${JSON.stringify(initialI18nStore)}');
+            	window.initialLanguage = '${initialLanguage}';
+			</script>
 		</head>
 
 		<body>

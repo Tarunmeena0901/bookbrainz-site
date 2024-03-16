@@ -22,7 +22,7 @@ import {
 } from '../helpers/props';
 
 import AboutPage from '../../client/components/pages/about';
-import {AppContainer} from 'react-hot-loader';
+import { AppContainer } from 'react-hot-loader';
 import ContributePage from '../../client/components/pages/contribute';
 import DevelopPage from '../../client/components/pages/develop';
 import FAQPage from '../components/pages/faq';
@@ -33,7 +33,16 @@ import LicensingPage from '../../client/components/pages/licensing';
 import PrivacyPage from '../../client/components/pages/privacy';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { useSSR } from 'react-i18next';
+import { I18nextProvider } from 'react-i18next';
+import i18n from '../../i18n'
 
+
+i18n.init({
+    resources: window.initialI18nStore,
+    lng: window.initialLanguage,
+    // Add any other options if needed
+});
 
 const propsTarget = document.getElementById('props');
 const props = propsTarget ? JSON.parse(propsTarget.innerHTML) : {};
@@ -54,15 +63,17 @@ const pageMap = {
 
 const Child = pageMap[page] || Index;
 
-const markup = (
-	<AppContainer>
-		<Layout {...extractLayoutProps(props)}>
-			<Child {...extractChildProps(props)}/>
-		</Layout>
-	</AppContainer>
-);
+const Markup = (
+	<I18nextProvider i18n={i18n}>
+		<AppContainer>
+			<Layout {...extractLayoutProps(props)}>
+				<Child {...extractChildProps(props)} />
+			</Layout>
+		</AppContainer>
+	</I18nextProvider>	
+	);
 
-ReactDOM.hydrate(markup, document.getElementById('target'));
+ReactDOM.hydrate(Markup, document.getElementById('target'));
 
 /*
  * As we are not exporting a component,

@@ -28,11 +28,15 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import RevisionsTable from './parts/revisions-table';
 import {faTwitter} from '@fortawesome/free-brands-svg-icons';
+import { withSSR, withTranslation } from 'react-i18next';
+import i18n from 'i18next';
+import { initReactI18next } from 'react-i18next';
 
 
 const {Alert, Button, Col, Container, Row} = bootstrap;
 
-class IndexPage extends React.Component {
+
+class IndexPage extends React.Component{
 	constructor(props) {
 		super(props);
 		this.renderHeader = this.renderHeader.bind(this);
@@ -186,20 +190,15 @@ class IndexPage extends React.Component {
 	}
 
 	renderContent() {
+		console.log("@@ PROPS  :", this.props.i18n);
+		const { t } = this.props;
 		return (
 			<Container>
 				<Row>
 					<Col lg={{offset: 2, span: 8}}>
 						<h1 className="text-center">The Open Book Database</h1>
 						<p className="lead text-justify">
-							BookBrainz is a project to create an online database
-							of information about every single book, magazine,
-							journal and other publication ever written. We make
-							all the data that we collect available to the whole
-							world to consume and use as they see fit. Anyone can
-							contribute to BookBrainz, whether through editing
-							our information, helping out with development, or
-							just spreading the word about our project.
+							{t('home.home_about')}
 						</p>
 					</Col>
 				</Row>
@@ -287,4 +286,4 @@ IndexPage.defaultProps = {
 	showRevisionEditor: true
 };
 
-export default IndexPage;
+export default withTranslation('common')(IndexPage);

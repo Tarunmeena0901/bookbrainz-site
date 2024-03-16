@@ -37,9 +37,15 @@ import initInflux from './influx';
 import logNode from 'log-node';
 import logger from 'morgan';
 import path from 'path';
+import fs from 'fs';
 import routes from './routes';
 import serveStatic from 'serve-static';
 import session from '../common/helpers/session';
+import i18n from '../i18n';
+import Backend from 'i18next-fs-backend';
+import i18next from 'i18next';
+
+const i18nextMiddleware = require('i18next-http-middleware');
 
 
 // Initialize log-to-stdout  writer
@@ -53,6 +59,32 @@ app.locals.orm = BookBrainzData(config.database);
 const rootDir = path.join(__dirname, '../../');
 
 app.set('trust proxy', config.site.proxyTrust);
+
+const appDirectory = fs.realpathSync(process.cwd());
+const resolveApp = (relativePath) => path.resolve(appDirectory, relativePath);
+const appSrc = resolveApp('src');
+
+i18n
+  .use(Backend)
+  .use(i18nextMiddleware.LanguageDetector)
+  .init(
+    {
+      debug: true,
+      ns: ['common'],
+      defaultNS: 'common',
+      backend: {
+		loadPath: path.resolve(__dirname,'../public/locales/{{lng}}/common.json'),
+	  },
+	  react: {
+		useSuspense: false,
+	  },
+	  preload: ['en' ,'es'],
+	  load: 'languageOnly'
+    },
+  )
+
+app.use('/locales', express.static(`${appSrc}/public/locales`))
+app.use(i18nextMiddleware.handle(i18next));
 
 app.use(favicon(path.join(rootDir, 'static/images/icons/favicon.ico')));
 
