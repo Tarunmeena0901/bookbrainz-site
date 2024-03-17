@@ -1,4 +1,4 @@
-import { useTranslation } from "react-i18next";
+import React, { useEffect } from 'react';
 
 
 const lngs = {
@@ -6,18 +6,18 @@ const lngs = {
     es: { nativeName: 'Spanish' }
 };
 
+function LanguageSwitcher(i18next) {
 
-function languageSwitcher() {
-    const { i18n } = useTranslation();
+    console.log("44 SWITCHER  :",i18next);
     return (
         <div>
             {Object.keys(lngs).map((lng) => (
-                <button key={lng} style={{ fontWeight: i18n.resolvedLanguage === lng ? 'bold' : 'normal' }} type="submit" onClick={() => i18n.changeLanguage(lng)}>
+                <button key={lng} style={{ fontWeight: i18next.i18n.resolvedLanguage === lng ? 'bold' : 'normal' }} type="submit" onClick={() => i18next.i18n.changeLanguage(lng)}>
                     {lngs[lng].nativeName}
                 </button>
             ))}
         </div>
-    )
+    );
 }
 
-export default languageSwitcher;
+export default LanguageSwitcher;

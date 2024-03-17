@@ -33,16 +33,8 @@ import LicensingPage from '../../client/components/pages/licensing';
 import PrivacyPage from '../../client/components/pages/privacy';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { useSSR } from 'react-i18next';
-import { I18nextProvider } from 'react-i18next';
-import i18n from '../../i18n'
-
-
-i18n.init({
-    resources: window.initialI18nStore,
-    lng: window.initialLanguage,
-    // Add any other options if needed
-});
+import { useSSR, withSSR } from 'react-i18next';
+import '../../i18n';
 
 const propsTarget = document.getElementById('props');
 const props = propsTarget ? JSON.parse(propsTarget.innerHTML) : {};
@@ -63,17 +55,19 @@ const pageMap = {
 
 const Child = pageMap[page] || Index;
 
-const Markup = (
-	<I18nextProvider i18n={i18n}>
+const Markup = () =>{
+	useSSR(window.initialI18nStore, window.initialLanguage);
+	return (
 		<AppContainer>
 			<Layout {...extractLayoutProps(props)}>
 				<Child {...extractChildProps(props)} />
 			</Layout>
 		</AppContainer>
-	</I18nextProvider>	
-	);
+	)
+}
 
-ReactDOM.hydrate(Markup, document.getElementById('target'));
+
+ReactDOM.hydrate(<Markup/>, document.getElementById('target'));
 
 /*
  * As we are not exporting a component,
