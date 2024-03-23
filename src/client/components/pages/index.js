@@ -28,260 +28,175 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import RevisionsTable from './parts/revisions-table';
 import {faTwitter} from '@fortawesome/free-brands-svg-icons';
-import { withTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 
 
 
 const {Alert, Button, Col, Container, Row} = bootstrap;
 
 
-class IndexPage extends React.Component{
-	constructor(props) {
-		super(props);
-		this.renderHeader = this.renderHeader.bind(this);
-		this.renderContent = this.renderContent.bind(this);
-	}
+function IndexPage(props) {
 
-	renderHeader() {
-		return (
-			<div>
-				<Alert className="text-center" variant="warning">
-					Under development — adventurous users, please test and
-					add data! Give us feedback about bugs, glitches and
-					potential improvements at {' '}
-					<a href="//tickets.metabrainz.org/projects/BB">
-						MetaBrainz JIRA!
-					</a>
-				</Alert>
-				<div id="background-image">
-					<div className="text-center" id="background-overlay">
-						<Container>
-							<img
-								alt="BookBrainz logo"
-								className="img-fluid center-block"
-								src="/images/BookBrainz_text.svg"
-								title="BookBrainz"
-								width="500"
-							/>
-							<Row>
-								<Col lg={{offset: 2, span: 8}}>
-									<form action="/search" className="input-group input-group-lg margin-top-5" role="search">
-										<input
-											required
-											autoFocus="autofocus"
-											className="form-control"
-											name="q"
-											placeholder="Search for..."
-											type="text"
-										/>
-										<span className="input-group-append">
-											<Button
-												type="submit"
-												variant="success"
-											>
-												<FontAwesomeIcon icon={faSearch}/>
-											</Button>
-										</span>
-									</form>
-									<Row className="margin-top-4">
-										<Col md={4}>
-											<Button
-												block
-												href="/about"
-												size="lg"
-												variant="secondary"
-											>
-												About
-											</Button>
-										</Col>
-										<Col md={4}>
-											<Button
-												block
-												href="/contribute"
-												size="lg"
-												variant="secondary"
-											>
-												Contribute
-											</Button>
-										</Col>
-										<Col md={4}>
-											<Button
-												block
-												href="/develop"
-												size="lg"
-												variant="secondary"
-											>
-												Develop
-											</Button>
-										</Col>
-									</Row>
-									<div className="margin-top-3">
-										<h4 className="contact-text">
-											Contact Us
-										</h4>
-										<div style={{
-											alignItems: 'center',
-											display: 'flex',
-											justifyContent: 'center'
-										}}
-										>
-											<FontAwesomeIcon
-												className="margin-sides-1 contact-text"
-												icon={faCircle}
-											/>
-											<a className="contact-text" href="//kiwiirc.com/nextclient/irc.libera.chat/?#bookbrainz">
-												<FontAwesomeIcon
-													className="contact-text"
-													icon={faCommentDots}
-													size="2x"
-												/>
-												IRC
-											</a>
-											<FontAwesomeIcon
-												className="margin-sides-1 contact-text"
-												icon={faCircle}
-											/>
-											<a className="contact-text" href="//community.metabrainz.org/c/bookbrainz">
-												<FontAwesomeIcon
-													className="contact-text"
-													icon={faComments}
-													size="2x"
-												/>
-												Forums
-											</a>
-											<FontAwesomeIcon
-												className="margin-sides-1 contact-text"
-												icon={faCircle}
-											/>
-											<a className="contact-text" href="//twitter.com/intent/tweet?screen_name=BookBrainz">
-												<FontAwesomeIcon
-													className="contact-text"
-													icon={faTwitter}
-													size="2x"
-												/>
-												Twitter
-											</a>
-											<FontAwesomeIcon
-												className="margin-sides-1 contact-text"
-												icon={faCircle}
-											/>
-											<a className="contact-text" href="mailto:bookbrainz@metabrainz.org">
-												<FontAwesomeIcon
-													className="contact-text"
-													icon={faEnvelope}
-													size="2x"
-												/>
-												Email
-											</a>
-											<FontAwesomeIcon
-												className="margin-sides-1 contact-text"
-												icon={faCircle}
-											/>
-										</div>
-									</div>
-								</Col>
-							</Row>
-						</Container>
-					</div>
-				</div>
-			</div>
-		);
-	}
+	const {t,i18n} = useTranslation();
 
-	renderContent() {
-		const { t } = this.props;
-		console.log("@@ PROPS :", this.props.i18n)
-		return (
+	const renderHeader = () => (
+	  <div>
+		<Alert className="text-center" variant="warning">
+		  Under development — adventurous users, please test and add data! Give us feedback about bugs, glitches, and potential improvements at {' '}
+		  <a href="//tickets.metabrainz.org/projects/BB">MetaBrainz JIRA!</a>
+		</Alert>
+		<div id="background-image">
+		  <div className="text-center" id="background-overlay">
 			<Container>
-				<Row>
-					<Col lg={{offset: 2, span: 8}}>
-						<h1 className="text-center">The Open Book Database</h1>
-						<p className="lead text-justify">
-							{t('home.home_about')}
-							
-						</p>
-					</Col>
-				</Row>
-				<hr/>
-				{!this.props.isLoggedIn && this.renderAboutUs()}
-				<div>
-					<RevisionsTable
-						results={this.props.recent}
-						showEntities={this.props.showEntities}
-						showRevisionEditor={this.props.showRevisionEditor}
+			  <img
+				alt="BookBrainz logo"
+				className="img-fluid center-block"
+				src="/images/BookBrainz_text.svg"
+				title="BookBrainz"
+				width="500"
+			  />
+			  <Row>
+				<Col lg={{ offset: 2, span: 8 }}>
+				  <form action="/search" className="input-group input-group-lg margin-top-5" role="search">
+					<input
+					  required
+					  autoFocus="autofocus"
+					  className="form-control"
+					  name="q"
+					  placeholder="Search for..."
+					  type="text"
 					/>
-					<div className="text-center">
-						<Button
-							href="/revisions"
-							variant="primary"
-						>
-							<FontAwesomeIcon className="margin-right-0-5" icon={faListUl}/>
-							See all revisions
-						</Button>
+					<span className="input-group-append">
+					  <Button type="submit" variant="success">
+						<FontAwesomeIcon icon={faSearch} />
+					  </Button>
+					</span>
+				  </form>
+				  <Row className="margin-top-4">
+					<Col md={4}>
+					  <Button block href="/about" size="lg" variant="secondary">About</Button>
+					</Col>
+					<Col md={4}>
+					  <Button block href="/contribute" size="lg" variant="secondary">Contribute</Button>
+					</Col>
+					<Col md={4}>
+					  <Button block href="/develop" size="lg" variant="secondary">Develop</Button>
+					</Col>
+				  </Row>
+				  <div className="margin-top-3">
+					<h4 className="contact-text">Contact Us</h4>
+					<div style={{ alignItems: 'center', display: 'flex', justifyContent: 'center' }}>
+					  <FontAwesomeIcon className="margin-sides-1 contact-text" icon={faCircle} />
+					  <a className="contact-text" href="//kiwiirc.com/nextclient/irc.libera.chat/?#bookbrainz">
+						<FontAwesomeIcon className="contact-text" icon={faCommentDots} size="2x" />
+						IRC
+					  </a>
+					  <FontAwesomeIcon className="margin-sides-1 contact-text" icon={faCircle} />
+					  <a className="contact-text" href="//community.metabrainz.org/c/bookbrainz">
+						<FontAwesomeIcon className="contact-text" icon={faComments} size="2x" />
+						Forums
+					  </a>
+					  <FontAwesomeIcon className="margin-sides-1 contact-text" icon={faCircle} />
+					  <a className="contact-text" href="//twitter.com/intent/tweet?screen_name=BookBrainz">
+						<FontAwesomeIcon className="contact-text" icon={faTwitter} size="2x" />
+						Twitter
+					  </a>
+					  <FontAwesomeIcon className="margin-sides-1 contact-text" icon={faCircle} />
+					  <a className="contact-text" href="mailto:bookbrainz@metabrainz.org">
+						<FontAwesomeIcon className="contact-text" icon={faEnvelope} size="2x" />
+						Email
+					  </a>
+					  <FontAwesomeIcon className="margin-sides-1 contact-text" icon={faCircle} />
 					</div>
-				</div>
+				  </div>
+				</Col>
+			  </Row>
 			</Container>
-		);
-	}
+		  </div>
+		</div>
+	  </div>
+	);
+  
+	const renderContent = () => (
+	  <Container>
+		<Row>
+		  <Col lg={{ offset: 2, span: 8 }}>
+			<h1 className="text-center">The Open Book Database</h1>
+			<p className="lead text-justify">
+				{t('home.home_about')}				
+			</p>
+		  </Col>
+		</Row>
+		<hr />
+		{!props.isLoggedIn && renderAboutUs()}
+		<div>
+		  <RevisionsTable
+			results={props.recent}
+			showEntities={props.showEntities}
+			showRevisionEditor={props.showRevisionEditor}
+		  />
+		  <div className="text-center">
+			<Button href="/revisions" variant="primary">
+			  <FontAwesomeIcon className="margin-right-0-5" icon={faListUl} />
+			  See all revisions
+			</Button>
+		  </div>
+		</div>
+	  </Container>
+	);
+  
+	const renderAboutUs = () => {
+	  const disableSignUp = props.disableSignUp ? { disabled: true } : {};
+	  return (
+		<React.Fragment>
+		  <Row>
+			<Col className="text-center margin-top-4" lg={2}>
+			  <FontAwesomeIcon icon={faUser} size="5x" />
+			</Col>
+			<Col lg={10}>
+			  <h2>Join Us!</h2>
+			  <p className="lead">
+				First off,{' '}
+				<a href="/about" target="_blank">read about us</a>{' and '}
+				<a href="/contribute" target="_blank">how you can help</a>. Then, if you think you want
+				to stick around, hit the button below to sign up
+				for a free BookBrainz account!
+			  </p>
+			</Col>
+		  </Row>
+		  <div className="text-center margin-top-1 margin-bottom-3">
+			<Button
+			  {...disableSignUp}
+			  href="/register"
+			  size="lg"
+			  variant="success"
+			>
+			  Register!
+			</Button>
+		  </div>
+		</React.Fragment>
+	  );
+	};
+  
+	const lngs = {
+	  en: { nativeName: 'English' },
+	  es: { nativeName: 'Spanish' }
+	};
 
-	renderAboutUs() {
-		const disableSignUp = this.props.disableSignUp ? {disabled: true} : {};
-		return (
-			<React.Fragment>
-				<Row>
-					<Col className="text-center margin-top-4" lg={2}>
-						<FontAwesomeIcon icon={faUser} size="5x"/>
-					</Col>
-					<Col lg={10}>
-						<h2>Join Us!</h2>
-						<p className="lead">
-					First off,{' '}
-							<a href="/about" target="blank">
-						read about us
-							</a>{' and '}
-							<a href="/contribute" target="blank">
-						how you can help
-							</a>. Then, if you think you want
-					to stick around, hit the button below to sign up
-					for a free BookBrainz account!
-						</p>
-					</Col>
-				</Row>
-				<div className="text-center margin-top-1 margin-bottom-3">
-					<Button
-						{...disableSignUp}
-						href="/register"
-						size="lg"
-						variant="success"
-					>
-				Register!
-					</Button>
-				</div>
-			</React.Fragment>
-		);
+	return (
+		<div>
+		  	<div>
+            	{Object.keys(lngs).map((lng) => (
+            	    <button key={lng} style={{ fontWeight: i18n.resolvedLanguage === lng ? 'bold' : 'normal' }} type="submit" onClick={() => i18n.changeLanguage(lng)}>
+            	        {lngs[lng].nativeName}
+            	    </button>
+            	))}
+        	</div>	
+	      {renderHeader()}
+	      {renderContent()}
+	    </div>
+	  );
 	}
-
-	render() {
-		const lngs = {
-			en: { nativeName: 'English' },
-			es: { nativeName: 'Spanish' }
-		};
-		const {i18n} = this.props;
-		return (
-			<div>
-				<div>
-            		{Object.keys(lngs).map((lng) => (
-            		    <button key={lng} style={{ fontWeight: i18n.resolvedLanguage === lng ? 'bold' : 'normal' }} type="submit" onClick={() => i18n.changeLanguage(lng)}>
-            		        {lngs[lng].nativeName}
-            		    </button>
-            		))}
-        		</div>	
-				{this.renderHeader()}
-				{this.renderContent()}
-			</div>
-		);
-	}
-}
 
 IndexPage.displayName = 'IndexPage';
 IndexPage.propTypes = {
@@ -298,5 +213,5 @@ IndexPage.defaultProps = {
 	showRevisionEditor: true
 };
 
-export default withTranslation('common')(IndexPage);
+export default IndexPage;
 //export default IndexPage
