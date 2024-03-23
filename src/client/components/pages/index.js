@@ -28,9 +28,8 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import RevisionsTable from './parts/revisions-table';
 import {faTwitter} from '@fortawesome/free-brands-svg-icons';
-import { withSSR, withTranslation } from 'react-i18next';
-import i18n from 'i18next';
-import { initReactI18next } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
+
 
 
 const {Alert, Button, Col, Container, Row} = bootstrap;
@@ -190,7 +189,6 @@ class IndexPage extends React.Component{
 	}
 
 	renderContent() {
-		console.log("@@ PROPS  :", this.props.i18n);
 		const { t } = this.props;
 		return (
 			<Container>
@@ -262,8 +260,20 @@ class IndexPage extends React.Component{
 	}
 
 	render() {
+		const lngs = {
+			en: { nativeName: 'English' },
+			es: { nativeName: 'Spanish' }
+		};
+		const {i18n} = this.props;
 		return (
 			<div>
+				<div>
+            		{Object.keys(lngs).map((lng) => (
+            		    <button key={lng} style={{ fontWeight: i18n.resolvedLanguage === lng ? 'bold' : 'normal' }} type="submit" onClick={() => i18n.changeLanguage(lng)}>
+            		        {lngs[lng].nativeName}
+            		    </button>
+            		))}
+        		</div>	
 				{this.renderHeader()}
 				{this.renderContent()}
 			</div>

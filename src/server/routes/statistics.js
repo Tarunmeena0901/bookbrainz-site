@@ -27,7 +27,7 @@ import StatisticsPage from '../../client/components/pages/statistics';
 import _ from 'lodash';
 import express from 'express';
 import target from '../templates/target';
-
+import { I18nextProvider } from 'react-i18next';
 
 const router = express.Router();
 
@@ -148,16 +148,33 @@ router.get('/', async (req, res, next) => {
 			last30DaysEntities,
 			topEditors
 		});
+
+		
+  		// const resources = req.i18n.getResourceBundle(locale, 'common');
+  		// const i18nClient = {locale, resources};
+		const locale = req.language;
+		const i18nServer = req.i18n.cloneInstance();
+		i18nServer.changeLanguage(locale);
+
 		const markup = ReactDOMServer.renderToString(
-			<Layout {...propHelpers.extractLayoutProps(props)}>
-				<StatisticsPage
-					allEntities={allEntities}
-					last30DaysEntities={last30DaysEntities}
-					topEditors={topEditors}
-				/>
-			</Layout>
+			<I18nextProvider i18n={i18nServer}>
+				<Layout {...propHelpers.extractLayoutProps(props)}>
+					<StatisticsPage
+						allEntities={allEntities}
+						last30DaysEntities={last30DaysEntities}
+						topEditors={topEditors}
+					/>
+				</Layout>
+			</I18nextProvider>
 		);
+
+		const initialI18nStore = req.i18n.services.resourceStore.data;
+		const initialLanguage = req.i18n.language;
+
 		return res.send(target({
+			initialI18nStore,
+			initialLanguage,
+			//i18nClient,
 			markup,
 			props: escapeProps(props),
 			script: '/js/statistics.js',

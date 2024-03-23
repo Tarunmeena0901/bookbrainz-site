@@ -1,3 +1,4 @@
+import serialize from 'serialize-javascript';
 const favicon = `
 	<link rel='apple-touch-icon' sizes='57x57'
 		href='/images/icons/apple-touch-icon-57x57.png'/>
@@ -41,6 +42,7 @@ const favicon = `
 export default ({
 	initialI18nStore,
 	initialLanguage,
+	i18nClient,
 	title,
 	markup,
 	page,
@@ -62,8 +64,8 @@ export default ({
 				content='width=device-width, initial-scale=1, shrink-to-fit=no'>
 			${favicon}
 			<script>
-				window.initialI18nStore = JSON.parse('${JSON.stringify(initialI18nStore)}');
-            	window.initialLanguage = '${initialLanguage}';
+				window.__initialI18nStore = JSON.parse('${JSON.stringify(initialI18nStore)}');
+            	window.__initialLanguage = '${initialLanguage}';
 			</script>
 		</head>
 

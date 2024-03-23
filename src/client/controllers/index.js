@@ -33,8 +33,8 @@ import LicensingPage from '../../client/components/pages/licensing';
 import PrivacyPage from '../../client/components/pages/privacy';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { useSSR, withSSR } from 'react-i18next';
-import '../../i18n';
+import { useSSR } from 'react-i18next';
+import '../../i18n-client';
 
 const propsTarget = document.getElementById('props');
 const props = propsTarget ? JSON.parse(propsTarget.innerHTML) : {};
@@ -56,7 +56,7 @@ const pageMap = {
 const Child = pageMap[page] || Index;
 
 const Markup = () =>{
-	useSSR(window.initialI18nStore, window.initialLanguage);
+	useSSR(window.__initialI18nStore , window.__initialLanguage)
 	return (
 		<AppContainer>
 			<Layout {...extractLayoutProps(props)}>

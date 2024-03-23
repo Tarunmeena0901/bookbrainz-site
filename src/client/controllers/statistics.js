@@ -22,23 +22,35 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import StatisticsPage from '../components/pages/statistics';
 import {extractLayoutProps} from '../helpers/props';
+import { useSSR } from 'react-i18next';
+import '../../i18n-client';
+//import { I18nextProvider } from 'react-i18next';
 
 
 const propsTarget = document.getElementById('props');
 const props = propsTarget ? JSON.parse(propsTarget.innerHTML) : {};
-const markup = (
-	<AppContainer>
-		<Layout {...extractLayoutProps(props)}>
-			<StatisticsPage
-				allEntities={props.allEntities}
-				last30DaysEntities={props.last30DaysEntities}
-				topEditors={props.topEditors}
-			/>
-		</Layout>
-	</AppContainer>
-);
 
-ReactDOM.hydrate(markup, document.getElementById('target'));
+//i18n.changeLanguage(window.__i18n.locale);
+//i18n.addResourceBundle(window.__i18n.locale, 'common', window.__i18n.resources, true);
+
+const Markup = () => {
+	useSSR(window.__initialI18nStore , window.__initialLanguage)
+	return(
+		//<I18nextProvider i18n={i18n}>
+			<AppContainer>
+				<Layout {...extractLayoutProps(props)}>
+					<StatisticsPage
+						allEntities={props.allEntities}
+						last30DaysEntities={props.last30DaysEntities}
+						topEditors={props.topEditors}
+					/>
+				</Layout>
+			</AppContainer>
+		//</I18nextProvider>
+	)
+};
+
+ReactDOM.hydrate(<Markup/>, document.getElementById('target'));
 
 /*
  * As we are not exporting a component,

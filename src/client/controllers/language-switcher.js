@@ -7,7 +7,6 @@ const lngs = {
 };
 
 function LanguageSwitcher(i18next) {
-
     console.log("44 SWITCHER  :",i18next);
     return (
         <div>

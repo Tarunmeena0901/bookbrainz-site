@@ -23,7 +23,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import {startCase as _startCase} from 'lodash';
 import {genEntityIconHTMLElement} from '../../helpers/entity';
-
+import { useTranslation, withTranslation } from 'react-i18next';
 
 const {Table} = bootstrap;
 const {formatDate} = utilsHelper;
@@ -139,9 +139,22 @@ EntityCountTable.propTypes = {
  */
 
 function StatisticsPage(props) {
+	const lngs = {
+		en: { nativeName: 'English' },
+		es: { nativeName: 'Spanish' }
+	};
 	const {allEntities, last30DaysEntities, topEditors} = props;
+	const {t , i18n} = useTranslation();
 	return (
 		<div>
+			<div>
+            {Object.keys(lngs).map((lng) => (
+                <button key={lng} style={{ fontWeight: i18n.resolvedLanguage === lng ? 'bold' : 'normal' }} type="submit" onClick={() => i18n.changeLanguage(lng)}>
+                    {lngs[lng].nativeName}
+                </button>
+            ))}
+        	</div>	
+			{t('home.home_heading')}
 			<div className="page-header"><h1>Statistics of BookBrainz</h1></div>
 			<TopEditorsTable editors={topEditors}/>
 			<EntityCountTable

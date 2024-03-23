@@ -35,7 +35,6 @@ import express from 'express';
 import { getOrderedRevisions } from '../helpers/revisions';
 import target from '../templates/target';
 import { I18nextProvider } from 'react-i18next';
-import i18next from 'i18next';
 
 const router = express.Router();
 
@@ -53,6 +52,10 @@ router.get('/', async (req, res, next) => {
 			requireJS: Boolean(res.locals.user)
 		});
 
+		const locale = req.language;
+		const i18nServer = req.i18n.cloneInstance();
+		i18nServer.changeLanguage(locale);
+
 		/*
 		 * Renders react components server side and injects markup into target
 		 * file object spread injects the app.locals variables into React as
@@ -60,21 +63,16 @@ router.get('/', async (req, res, next) => {
 		 */
 
 		const markup = ReactDOMServer.renderToString(
-			<I18nextProvider i18n={req.i18n}>
+			<I18nextProvider i18n={i18nServer}>
 				<Layout	{...propHelpers.extractLayoutProps(props)}>
 					<Index {...propHelpers.extractChildProps(props)} />
 				</Layout>
 			</I18nextProvider>
 		);
-		const initialI18nStore = {};
-		req.i18n.languages.forEach(l => {
-		  initialI18nStore[l] = req.i18n.services.resourceStore.data[l];
-		});
+		
+		const initialI18nStore = req.i18n.services.resourceStore.data;
 		const initialLanguage = req.i18n.language;
 
-		console.log("33 STORE : ", initialI18nStore);
-		console.log("33 LANG : ", initialLanguage);
-		
 		res.send(target({
 			initialI18nStore,
 			initialLanguage,
