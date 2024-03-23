@@ -22,19 +22,23 @@ import CollectionsPage from '../components/pages/collections';
 import Layout from '../containers/layout';
 import React from 'react';
 import ReactDOM from 'react-dom';
-
+import { useSSR } from 'react-i18next';
+import '../../i18n-client';
 
 const propsTarget = document.getElementById('props');
 const props = propsTarget ? JSON.parse(propsTarget.innerHTML) : {};
-const markup = (
+const Markup = () => {
+	useSSR(window.__initialI18nStore , window.__initialLanguage)
+	return(
 	<AppContainer>
 		<Layout {...extractLayoutProps(props)}>
 			<CollectionsPage {...extractChildProps(props)}/>
 		</Layout>
 	</AppContainer>
-);
+	)
+};
 
-ReactDOM.hydrate(markup, document.getElementById('target'));
+ReactDOM.hydrate(<Markup/>, document.getElementById('target'));
 
 /*
  * As we are not exporting a component,

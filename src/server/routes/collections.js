@@ -27,6 +27,7 @@ import _ from 'lodash';
 import express from 'express';
 import {getOrderedPublicCollections} from '../helpers/collections';
 import target from '../templates/target';
+import { I18nextProvider } from 'react-i18next';
 
 
 const router = express.Router();
@@ -61,18 +62,29 @@ router.get('/', async (req, res, next) => {
 			user
 		});
 
+		const locale = req.language;
+		const i18nServer = req.i18n.cloneInstance();
+		i18nServer.changeLanguage(locale);
+
 		/*
 		 * Renders react components server side and injects markup into target
 		 * file object spread injects the app.locals variables into React as
 		 * props
 		 */
 		const markup = ReactDOMServer.renderToString(
-			<Layout {...propHelpers.extractLayoutProps(props)}>
-				<CollectionsPage {...propHelpers.extractChildProps(props)}/>
-			</Layout>
+			<I18nextProvider i18n={i18nServer}>
+				<Layout {...propHelpers.extractLayoutProps(props)}>
+					<CollectionsPage {...propHelpers.extractChildProps(props)}/>
+				</Layout>
+			</I18nextProvider>
 		);
+		
+		const initialI18nStore = req.i18n.services.resourceStore.data;
+		const initialLanguage = req.i18n.language;
 
 		res.send(target({
+			initialI18nStore,
+			initialLanguage,
 			markup,
 			props: escapeProps(props),
 			script: '/js/collections.js',

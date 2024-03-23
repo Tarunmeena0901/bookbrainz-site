@@ -21,6 +21,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
 import React from 'react';
 import {faTwitter} from '@fortawesome/free-brands-svg-icons';
+import { useTranslation } from 'react-i18next';
 
 
 /**
@@ -29,12 +30,27 @@ import {faTwitter} from '@fortawesome/free-brands-svg-icons';
  * page
  */
 function AboutPage() {
+	const lngs = {
+		en: { nativeName: 'English' },
+		es: { nativeName: 'Spanish' }
+	};
+	const {t , i18n} = useTranslation();
 	const NESLink =
 		'https://ocharles.org.uk/blog/posts/' +
 			'2012-07-10-nes-does-it-better-1.html';
 
 	return (
 		<div>
+			<div>
+            {Object.keys(lngs).map((lng) => (
+                <button key={lng} style={{ fontWeight: i18n.resolvedLanguage === lng ? 'bold' : 'normal' }} type="submit" onClick={() => i18n.changeLanguage(lng)}>
+                    {lngs[lng].nativeName}
+                </button>
+            ))}
+        	</div>	
+			<p className="lead">
+				{t('home.home_about')}
+			</p>
 			<div className="page-header"><h1>About BookBrainz</h1></div>
 			<p className="lead">
 				BookBrainz is an online encyclopaedia which contains

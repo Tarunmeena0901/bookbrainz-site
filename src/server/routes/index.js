@@ -98,13 +98,24 @@ function _createStaticRoute(route, title, PageComponent) {
 	router.get(route, (req, res) => {
 		const props = generateProps(req, res);
 
+		const locale = req.language;
+		const i18nServer = req.i18n.cloneInstance();
+		i18nServer.changeLanguage(locale);
+
 		const markup = ReactDOMServer.renderToString(
-			<Layout {...propHelpers.extractLayoutProps(props)}>
-				<PageComponent />
-			</Layout>
+			<I18nextProvider i18n={i18nServer}>
+				<Layout {...propHelpers.extractLayoutProps(props)}>
+					<PageComponent />
+				</Layout>
+			</I18nextProvider>
 		);
 
+		const initialI18nStore = req.i18n.services.resourceStore.data;
+		const initialLanguage = req.i18n.language;
+
 		res.send(target({
+			initialI18nStore,
+			initialLanguage,
 			markup,
 			page: title,
 			props: escapeProps(props),

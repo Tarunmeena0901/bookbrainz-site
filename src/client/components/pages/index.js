@@ -190,6 +190,7 @@ class IndexPage extends React.Component{
 
 	renderContent() {
 		const { t } = this.props;
+		console.log("@@ PROPS :", this.props.i18n)
 		return (
 			<Container>
 				<Row>
@@ -197,6 +198,7 @@ class IndexPage extends React.Component{
 						<h1 className="text-center">The Open Book Database</h1>
 						<p className="lead text-justify">
 							{t('home.home_about')}
+							
 						</p>
 					</Col>
 				</Row>
@@ -297,3 +299,4 @@ IndexPage.defaultProps = {
 };
 
 export default withTranslation('common')(IndexPage);
+//export default IndexPage

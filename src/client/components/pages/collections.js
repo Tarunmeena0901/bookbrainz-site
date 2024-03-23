@@ -19,68 +19,84 @@
 import CollectionsTable from './parts/collections-table';
 import PagerElement from './parts/pager';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useState } from 'react';
 
 
-class CollectionsPage extends React.Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			querySearchParams: props.type ? `type=${props.type}` : '',
-			results: this.props.results,
-			type: props.type
-		};
-		this.handleTypeChange = this.handleTypeChange.bind(this);
-		this.searchResultsCallback = this.searchResultsCallback.bind(this);
-		this.paginationUrl = './collections/collections';
-	}
-
-	searchResultsCallback(newResults) {
-		this.setState({results: newResults});
-	}
-
-	handleTypeChange(type) {
-		const querySearchParams = type ? `type=${type}` : '';
-		this.setState({querySearchParams, type});
-	}
-
-	searchParamsChangeCallback = (searchParms) => {
-		const type = searchParms.get('type') ?? '';
-		if (type !== this.state.type) {
-			this.setState({querySearchParams: `?${searchParms.toString()}`, type});
-		}
+function CollectionsPage(props) {
+	const [querySearchParams, setQuerySearchParams] = useState(props.type ? `type=${props.type}` : '');
+	const [results, setResults] = useState(props.results);
+	const [type, setType] = useState(props.type);
+	const paginationUrl = './collections/collections';
+  
+	const searchResultsCallback = (newResults) => {
+	  setResults(newResults);
+	};
+  
+	const handleTypeChange = (newType) => {
+	  const newQuerySearchParams = newType ? `type=${newType}` : '';
+	  setQuerySearchParams(newQuerySearchParams);
+	  setType(newType);
+	};
+  
+	const searchParamsChangeCallback = (searchParams) => {
+	  const newType = searchParams.get('type') ?? '';
+	  if (newType !== type) {
+		setQuerySearchParams(`?${searchParams.toString()}`);
+		setType(newType);
+	  }
 	};
 
-	render() {
-		return (
-			<div id="pageWithPagination">
-				<CollectionsTable
-					entityTypes={this.props.entityTypes}
-					ownerId={this.props.editor ? this.props.editor.id : null}
-					results={this.state.results}
-					showIfOwnerOrCollaborator={this.props.showIfOwnerOrCollaborator}
-					showLastModified={this.props.showLastModified}
-					showOwner={this.props.showOwner}
-					showPrivacy={this.props.showPrivacy}
-					tableHeading={this.props.tableHeading}
-					type={this.state.type}
-					user={this.props.user}
-					onTypeChange={this.handleTypeChange}
-				/>
-				<PagerElement
-					from={this.props.from}
-					nextEnabled={this.props.nextEnabled}
-					paginationUrl={this.paginationUrl}
-					querySearchParams={this.state.querySearchParams}
-					results={this.state.results}
-					searchParamsChangeCallback={this.searchParamsChangeCallback}
-					searchResultsCallback={this.searchResultsCallback}
-					size={this.props.size}
-				/>
-			</div>
-		);
-	}
-}
+	const {t , i18n} = useTranslation();
+	const lngs = {
+		en: { nativeName: 'English' },
+		es: { nativeName: 'Spanish' }
+	};
+  
+	useEffect(() => {
+	  // This effect will trigger when `props.results` or `props.type` changes
+	  setResults(props.results);
+	  setType(props.type);
+	  setQuerySearchParams(props.type ? `type=${props.type}` : '');
+	}, [props.results, props.type]);
+  
+	return (
+	  <div id="pageWithPagination">
+		<div>
+            {Object.keys(lngs).map((lng) => (
+                <button key={lng} style={{ fontWeight: i18n.resolvedLanguage === lng ? 'bold' : 'normal' }} type="submit" onClick={() => i18n.changeLanguage(lng)}>
+                    {lngs[lng].nativeName}
+                </button>
+            ))}
+        </div>	
+		{t('home.home_about')}
+		<CollectionsTable
+		  entityTypes={props.entityTypes}
+		  ownerId={props.editor ? props.editor.id : null}
+		  results={results}
+		  showIfOwnerOrCollaborator={props.showIfOwnerOrCollaborator}
+		  showLastModified={props.showLastModified}
+		  showOwner={props.showOwner}
+		  showPrivacy={props.showPrivacy}
+		  tableHeading={props.tableHeading}
+		  type={type}
+		  user={props.user}
+		  onTypeChange={handleTypeChange}
+		/>
+		<PagerElement
+		  from={props.from}
+		  nextEnabled={props.nextEnabled}
+		  paginationUrl={paginationUrl}
+		  querySearchParams={querySearchParams}
+		  results={results}
+		  searchParamsChangeCallback={searchParamsChangeCallback}
+		  searchResultsCallback={searchResultsCallback}
+		  size={props.size}
+		/>
+	  </div>
+	);
+  }
 
 CollectionsPage.displayName = 'CollectionsPage';
 CollectionsPage.propTypes = {
