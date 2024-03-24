@@ -3337,14 +3337,6 @@ cookiejar@^2.1.0, cookiejar@^2.1.1, cookiejar@^2.1.4:
   resolved "https://registry.npmjs.org/cookiejar/-/cookiejar-2.1.4.tgz"
   integrity sha512-LDx6oHrK+PhzLKJU9j5S7/Y3jM/mUHvD/DeI1WQmJn652iPC5Y4TBzC9l+5OMOXlyTTA+SmVUPm0HQUwpD5Jqw==
 
-cookies@0.7.1:
-  version "0.7.1"
-  resolved "https://registry.npmjs.org/cookies/-/cookies-0.7.1.tgz"
-  integrity sha512-VX3KKCWrKjPnCwF78P60rnMfy1piVeObnjuKO4rBUyiSRYDgY/EqXbw3jX/uXmmdAPmayVJqdbLfJ0BRSfRZFg==
-  dependencies:
-    depd "~1.1.1"
-    keygrip "~1.0.2"
-
 core-js-compat@^3.18.0, core-js-compat@^3.19.1:
   version "3.19.2"
   resolved "https://registry.npmjs.org/core-js-compat/-/core-js-compat-3.19.2.tgz"
@@ -3393,13 +3385,6 @@ cross-env@^7.0.3:
   integrity sha512-+/HKd6EgcQCJGh2PSjZuUitQBQynKor4wrFbRg4DtAgS1aWO+gU52xpH7M9ScGgXSYmAVS9bIJ8EzuaGw0oNAw==
   dependencies:
     cross-spawn "^7.0.1"
-
-cross-fetch@4.0.0:
-  version "4.0.0"
-  resolved "https://registry.npmjs.org/cross-fetch/-/cross-fetch-4.0.0.tgz"
-  integrity sha512-e4a5N8lVvuLgAWgnCrLr2PP0YyDOTHa9H/Rj54dirp61qXnNq46m82bRhNqIA5VccJtWBvPTFRV3TtvHUKPB1g==
-  dependencies:
-    node-fetch "^2.6.12"
 
 cross-spawn@^7.0.1, cross-spawn@^7.0.2, cross-spawn@^7.0.3:
   version "7.0.3"
@@ -3642,11 +3627,6 @@ delayed-stream@~1.0.0:
   version "1.0.0"
   resolved "https://registry.npmjs.org/delayed-stream/-/delayed-stream-1.0.0.tgz"
   integrity sha1-3zrhmayt+31ECqrgsp4icrJOxhk=
-
-depd@~1.1.1:
-  version "1.1.2"
-  resolved "https://registry.npmjs.org/depd/-/depd-1.1.2.tgz"
-  integrity sha512-7emPTl6Dpo6JRXOXjLRxck+FlLRX5847cLKEn00PLAgc3g2hTZZgr+e4c2v6QpSmLeFP3n5yUo7ft6avBK/5jQ==
 
 depd@~2.0.0, depd@2.0.0:
   version "2.0.0"
@@ -5148,31 +5128,10 @@ https-proxy-agent@^5.0.0, https-proxy-agent@^5.0.1:
     agent-base "6"
     debug "4"
 
-i18next-browser-languagedetector@^7.2.0:
-  version "7.2.0"
-  resolved "https://registry.npmjs.org/i18next-browser-languagedetector/-/i18next-browser-languagedetector-7.2.0.tgz"
-  integrity sha512-U00DbDtFIYD3wkWsr2aVGfXGAj2TgnELzOX9qv8bT0aJtvPV9CRO77h+vgmHFBMe7LAxdwvT/7VkCWGya6L3tA==
-  dependencies:
-    "@babel/runtime" "^7.23.2"
-
-i18next-express-middleware@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.npmjs.org/i18next-express-middleware/-/i18next-express-middleware-2.0.0.tgz"
-  integrity sha512-TGlSkYsQHikggv4mIp5B+CiXsZzwbpHaZgmOkRNGStLOdKHABH5cHr136g2PC1+p2VPMf3y3UoQZ1TfPfVOrgg==
-  dependencies:
-    cookies "0.7.1"
-
 i18next-fs-backend@^2.3.1:
   version "2.3.1"
   resolved "https://registry.npmjs.org/i18next-fs-backend/-/i18next-fs-backend-2.3.1.tgz"
   integrity sha512-tvfXskmG/9o+TJ5Fxu54sSO5OkY6d+uMn+K6JiUGLJrwxAVfer+8V3nU8jq3ts9Pe5lXJv4b1N7foIjJ8Iy2Gg==
-
-i18next-http-backend@^2.5.0:
-  version "2.5.0"
-  resolved "https://registry.npmjs.org/i18next-http-backend/-/i18next-http-backend-2.5.0.tgz"
-  integrity sha512-Z/aQsGZk1gSxt2/DztXk92DuDD20J+rNudT7ZCdTrNOiK8uQppfvdjq9+DFQfpAnFPn3VZS+KQIr1S/W1KxhpQ==
-  dependencies:
-    cross-fetch "4.0.0"
 
 i18next-http-middleware@^3.5.0:
   version "3.5.0"
@@ -5899,11 +5858,6 @@ just-extend@^4.0.2:
   resolved "https://registry.npmjs.org/just-extend/-/just-extend-4.2.1.tgz"
   integrity sha512-g3UB796vUFIY90VIv/WX3L2c8CS2MdWUww3CNrYmqza1Fg0DURc2K/O4YrnklBdQarSJ/y8JnJYDGc+1iumQjg==
 
-keygrip@~1.0.2:
-  version "1.0.3"
-  resolved "https://registry.npmjs.org/keygrip/-/keygrip-1.0.3.tgz"
-  integrity sha512-/PpesirAIfaklxUzp4Yb7xBper9MwP6hNRA6BGGUFCgbJ+BM5CKBtsoxinNXkLHAr+GXS1/lSlF2rP7cv5Fl+g==
-
 keyv@^3.0.0:
   version "3.1.0"
   resolved "https://registry.npmjs.org/keyv/-/keyv-3.1.0.tgz"
@@ -6503,13 +6457,6 @@ node-environment-flags@^1.0.5:
   dependencies:
     object.getownpropertydescriptors "^2.0.3"
     semver "^5.7.0"
-
-node-fetch@^2.6.12:
-  version "2.7.0"
-  resolved "https://registry.npmjs.org/node-fetch/-/node-fetch-2.7.0.tgz"
-  integrity sha512-c4FRfUm/dbcWZ7U+1Wq0AwCyFL+3nt2bEw05wfxSz+DWpWsitgmSgYmy2dQdWyKC1694ELPqMs/YzUSNozLt8A==
-  dependencies:
-    whatwg-url "^5.0.0"
 
 node-int64@^0.4.0:
   version "0.4.0"
@@ -8576,11 +8523,6 @@ tr46@^4.1.1:
   dependencies:
     punycode "^2.3.0"
 
-tr46@~0.0.3:
-  version "0.0.3"
-  resolved "https://registry.npmjs.org/tr46/-/tr46-0.0.3.tgz"
-  integrity sha512-N3WMsuqV66lT30CrXNbEjx4GEwlow3v6rr4mCcv6prnfwhS01rkgyFdjPNBYd9br7LpXV1+Emh01fHnq2Gdgrw==
-
 tsconfig-paths@^3.14.1:
   version "3.14.1"
   resolved "https://registry.npmjs.org/tsconfig-paths/-/tsconfig-paths-3.14.1.tgz"
@@ -8886,11 +8828,6 @@ watchpack@^2.4.0:
     glob-to-regexp "^0.4.1"
     graceful-fs "^4.1.2"
 
-webidl-conversions@^3.0.0:
-  version "3.0.1"
-  resolved "https://registry.npmjs.org/webidl-conversions/-/webidl-conversions-3.0.1.tgz"
-  integrity sha512-2JAn3z8AR6rjK8Sm8orRC0h/bcl/DqL7tRPdGZ4I1CjdF+EaMLmYxBHyXuKL849eucPFhvBoxMsflfOb8kxaeQ==
-
 webidl-conversions@^5.0.0:
   version "5.0.0"
   resolved "https://registry.npmjs.org/webidl-conversions/-/webidl-conversions-5.0.0.tgz"
@@ -9034,14 +8971,6 @@ whatwg-url@^12.0.0, whatwg-url@^12.0.1:
   dependencies:
     tr46 "^4.1.1"
     webidl-conversions "^7.0.0"
-
-whatwg-url@^5.0.0:
-  version "5.0.0"
-  resolved "https://registry.npmjs.org/whatwg-url/-/whatwg-url-5.0.0.tgz"
-  integrity sha512-saE57nupxk6v3HY35+jzBwYa0rKSy0XR8JSxZPwgLr7ys0IBzhGviA1/TUGJLmSVqs8pb9AnvICXEuOHLprYTw==
-  dependencies:
-    tr46 "~0.0.3"
-    webidl-conversions "^3.0.0"
 
 whatwg-url@^8.0.0, whatwg-url@^8.5.0:
   version "8.7.0"
