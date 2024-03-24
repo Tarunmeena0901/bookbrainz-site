@@ -63,7 +63,7 @@ function IndexPage(props) {
 					  autoFocus="autofocus"
 					  className="form-control"
 					  name="q"
-					  placeholder="Search for..."
+					  placeholder={t('home.home_search')}
 					  type="text"
 					/>
 					<span className="input-group-append">
@@ -74,17 +74,17 @@ function IndexPage(props) {
 				  </form>
 				  <Row className="margin-top-4">
 					<Col md={4}>
-					  <Button block href="/about" size="lg" variant="secondary">About</Button>
+					  <Button block href="/about" size="lg" variant="secondary">{t('home.home_button_about')}</Button>
 					</Col>
 					<Col md={4}>
-					  <Button block href="/contribute" size="lg" variant="secondary">Contribute</Button>
+					  <Button block href="/contribute" size="lg" variant="secondary">{t('home.home_button_contribute')}</Button>
 					</Col>
 					<Col md={4}>
-					  <Button block href="/develop" size="lg" variant="secondary">Develop</Button>
+					  <Button block href="/develop" size="lg" variant="secondary">{t('home.home_button_develop')}</Button>
 					</Col>
 				  </Row>
 				  <div className="margin-top-3">
-					<h4 className="contact-text">Contact Us</h4>
+					<h4 className="contact-text">{t('home.home_contact')}</h4>
 					<div style={{ alignItems: 'center', display: 'flex', justifyContent: 'center' }}>
 					  <FontAwesomeIcon className="margin-sides-1 contact-text" icon={faCircle} />
 					  <a className="contact-text" href="//kiwiirc.com/nextclient/irc.libera.chat/?#bookbrainz">
@@ -121,7 +121,7 @@ function IndexPage(props) {
 	  <Container>
 		<Row>
 		  <Col lg={{ offset: 2, span: 8 }}>
-			<h1 className="text-center">The Open Book Database</h1>
+			<h1 className="text-center">{t('home.home_heading')}</h1>
 			<p className="lead text-justify">
 				{t('home.home_about')}				
 			</p>
@@ -138,7 +138,7 @@ function IndexPage(props) {
 		  <div className="text-center">
 			<Button href="/revisions" variant="primary">
 			  <FontAwesomeIcon className="margin-right-0-5" icon={faListUl} />
-			  See all revisions
+			  {t('home.home_button_allrevision')}
 			</Button>
 		  </div>
 		</div>
