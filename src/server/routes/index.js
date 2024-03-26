@@ -63,7 +63,7 @@ router.get('/', async (req, res, next) => {
 		 */
 
 		const markup = ReactDOMServer.renderToString(
-			<I18nextProvider i18n={i18nServer}>
+			<I18nextProvider key={i18nServer.language} i18n={i18nServer}>
 				<Layout	{...propHelpers.extractLayoutProps(props)}>
 					<Index {...propHelpers.extractChildProps(props)} />
 				</Layout>

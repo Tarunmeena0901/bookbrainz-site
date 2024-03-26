@@ -68,7 +68,6 @@ app.set('trust proxy', config.site.proxyTrust);
 app.use(i18nextMiddleware.handle(i18n));
 
 
-
 //app.use('/locales', express.static(`${appSrc}/public/locales`))
 
 
